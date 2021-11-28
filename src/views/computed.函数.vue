@@ -3,6 +3,8 @@
     <h2>computed函数和v2大部分一致</h2>
     <ul>
       <li v-for="(v, i) in list" :key="i" @click="del(i)">{{ v }}</li>
+      <li>大于3的个数{{ thridNumber }}</li>
+      <li>0变化加一百{{ ffn }}</li>
     </ul>
     <button @click="addData">随机添加</button>
   </div>
@@ -29,7 +31,16 @@ export default {
     const del = (i) => {
       list.value.splice(i, 1)
     }
-    return { list, addData, del }
+    // 计算属性函数 大于3 依赖list的数据计算重新生成新的数据结果有缓存所以快
+    const thridNumber = computed(() => {
+      return list.value.filter((item) => item > 3)
+    })
+    // 计算属性 加100
+    const s = ref(0)
+    const ffn = computed(() => {
+      return s.value + 100
+    })
+    return { list, addData, del, thridNumber, ffn }
   }
 }
 </script>
