@@ -1,13 +1,14 @@
 <template>
   <div>
     <h1>reactive函数的响应式定义data</h1>
-    <h3>{{ formData }}</h3>
+    <h3>{{ name }}</h3>
+    <h4>现在年龄:{{ age }}</h4>
     <button @click="changeName">年龄</button>
   </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, toRefs } from 'vue'
 // 1. 从vue框架中导入reactive函数
 // 2. 在setup函数中调用reactive函数并将对象数据传入
 // 3. 在setup函数中把reactive函数调用完毕之后的返回值以对象的形式返回出去
@@ -23,7 +24,9 @@ export default {
       formData.age = Math.floor(Math.random() * 10 + 1)
     }
     // 把变量返回给模板===》类似data中的return这里是简写形式 return { formData :formData}
-    return { formData, changeName }
+    // 现在结构对象可以在模板中直接用对象中的属性但是失去了响应式===>数组解构 是浅拷贝只是值
+    // return { ...formData, changeName }
+    return { ...toRefs(formData), changeName }
   }
 }
 </script>
