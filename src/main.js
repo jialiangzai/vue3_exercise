@@ -8,11 +8,11 @@ import { createApp } from 'vue'
 // import Hook from '@/views/生命周期钩子函数.vue'
 // import Parent from '@/views/parent.vue'
 // Todolist ===>01
-// import Todos from '@/views/todos00.vue'
+import Todos from '@/views/todos00.vue'
 // Todolist组件化
 // import Todolist from '@/views/todos.vue'
 // 模板中的ref
-import TemRef from '@/views/模板中的ref.vue'
+// import TemRef from '@/views/模板中的ref.vue'
 import router from './router'
 import store from './store'
 
@@ -25,6 +25,6 @@ import store from './store'
 // createApp(Watch).use(store).use(router).mount('#app')
 // createApp(Hook).use(store).use(router).mount('#app')
 // createApp(Parent).use(store).use(router).mount('#app')
-// createApp(Todos).use(store).use(router).mount('#app')
+createApp(Todos).use(store).use(router).mount('#app')
 // createApp(Todolist).use(store).use(router).mount('#app')
-createApp(TemRef).use(store).use(router).mount('#app')
+// createApp(TemRef).use(store).use(router).mount('#app')

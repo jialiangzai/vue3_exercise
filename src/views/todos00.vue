@@ -53,52 +53,24 @@
 // 4. 任务是否完成选择状态切换   v-model
 // 5. 多选和取消多选   计算属性computed的set和get完整写法
 // 6. 未完成任务数量统计 computed函数写法
-import { ref, computed } from 'vue'
+// import { ref, computed } from 'vue'
+import { useList, useChange } from '@/hooks'
 export default {
+  // 整体逻辑业务分为了定义数据和数据的统计可以抽离两个函数逻辑复用==》
+  // 可以被重复利用的数据以及操作数据行为的整块逻辑集合
   setup () {
-    // 因为没接口手写模拟数据
-    const todoList = ref([{ id: 0, name: '吃饭', isOk: false }, { id: 1, name: '睡觉', isOk: false }])
-    // 数据绑定获取输入的内容
-    const newTodo = ref('')
-    // 全部完成/未完成
-    // const isOkAll = ref(false)
-    const delTodo = i => {
-      todoList.value.splice(i, 1)
-    }
-    // 新增
-    const addTodo = () => {
-      // 排除空回车
-      // if (newTodo.value === '') return
-      if (!newTodo.value.trim()) return
-      todoList.value.unshift({
-
-        id: Date.now(),
-        name: newTodo.value,
-        isOk: false
-      })
-      // 清空输入框
-      newTodo.value = ''
-    }
     // 全选/全不选==>依赖变量而计算的结果做渲染(计算属性)
     // const changeOkAll = computed(() => {
     //   return todoList.value.every(item => item.isOk)
     // })
-    const changeOkAll = computed({
-      get () {
-        return todoList.value.every(item => item.isOk)
-      },
-      set (v) {
-        // set设置改变全选/未全选
-        return todoList.value.forEach(io => {
-          io.isOk = v
-        })
-      }
-    })
-    // 剩余未完成的个数===>获取
-    const surp = computed(() => {
-      // 过滤isok 此处简写了过滤留下为false
-      return todoList.value.filter(item => !item.isOk).length
-    })
+    const {
+      todoList,
+      newTodo,
+      delTodo,
+      addTodo
+    } = useList()
+    // 传递参数
+    const { changeOkAll, surp } = useChange(todoList)
     return { todoList, delTodo, addTodo, newTodo, changeOkAll, surp }
   }
 }
