@@ -8,11 +8,16 @@
       <li @click="change">点击修改父组件的数据</li>
     </ul>
   </div>
+  <GrandSon></GrandSon>
 </template>
 
 <script>
 // import {ref} from 'vue'
+import GrandSon from './grandson.vue'
 export default {
+  components: {
+    GrandSon
+  },
   // v2的写法
   props: {
     num: {

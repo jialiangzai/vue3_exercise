@@ -1,14 +1,14 @@
 <template>
   <div>
     <h1>父组件</h1>
-    <Child :num="num" :obj="obj" :obj2="obj2" @change-obj="rand"></Child>
     <button @click="num++">更改数字</button>
+    <Child :num="num" :obj="obj" :obj2="obj2" @change-obj="rand"></Child>
   </div>
 </template>
 
 <script>
 import Child from '@/views/components/children.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, provide } from 'vue'
 export default {
   components: {
     Child
@@ -20,6 +20,8 @@ export default {
     const rand = (n) => {
       obj2.age += n
     }
+    // 依赖数据(注入数据)
+    provide('nums', num)
     return { num, obj, obj2, rand }
   }
 }
