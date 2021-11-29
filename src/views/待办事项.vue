@@ -3,103 +3,35 @@
     <!-- 头部输入框区域 -->
     <header class="header">
       <h1>todos</h1>
-      <input
-        v-model="newTodo"
-        class="new-todo"
-        placeholder="请输入要完成的任务"
-        autofocus
-        @keyup.enter="addTodo"
-      />
+      <input class="new-todo" placeholder="请输入要完成的任务" autofocus />
     </header>
     <section class="main">
       <!-- 全选切换input -->
-      <input
-        id="toggle-all"
-        class="toggle-all"
-        type="checkbox"
-        v-model="changeOkAll"
-      />
+      <input id="toggle-all" class="toggle-all" type="checkbox" />
       <label for="toggle-all">标记所有已经完成</label>
       <ul class="todo-list">
         <!-- 任务列表 -->
-        <!-- <li>
+        <li>
           <div class="view">
             <input class="toggle" type="checkbox" checked />
             <label>写代码</label>
             <button class="destroy"></button>
           </div>
-        </li> -->
-        <li v-for="(v, i) in todoList" :key="i">
+        </li>
+        <li>
           <div class="view">
-            <input class="toggle" type="checkbox" v-model="v.isOk" />
-            <label>{{ v.name }}</label>
-            <button class="destroy" @click="delTodo(i)"></button>
+            <input class="toggle" type="checkbox" />
+            <label>打豆豆</label>
+            <button class="destroy"></button>
           </div>
         </li>
       </ul>
     </section>
     <footer class="footer">
-      <span class="todo-count">
-        还未完成的任务有:<strong>{{ surp }}</strong
-        >项
-      </span>
+      <span class="todo-count"> 还未完成的任务有:<strong>3</strong>项 </span>
     </footer>
   </section>
 </template>
-<script>
-// 1. 渲染列表数据 v-for
-// 2. 点击删除当前列表  splice + index
-// 3. 回车添加新任务 @keyup.enter="addTodo"   list.unshift
-// 4. 任务是否完成选择状态切换   v-model
-// 5. 多选和取消多选   计算属性computed的set和get完整写法
-// 6. 未完成任务数量统计 computed函数写法
-import { ref, computed } from 'vue'
-export default {
-  setup () {
-    // 因为没接口手写模拟数据
-    const todoList = ref([{ id: 0, name: '吃饭', isOk: false }, { id: 1, name: '睡觉', isOk: false }])
-    // 数据绑定获取输入的内容
-    const newTodo = ref('')
-    // 全部完成/未完成
-    // const isOkAll = ref(false)
-    const delTodo = i => {
-      todoList.value.splice(i, 1)
-    }
-    // 新增
-    const addTodo = () => {
-      todoList.value.unshift({
-
-        id: Date.now(),
-        name: newTodo.value,
-        isOk: false
-      })
-      // 清空输入框
-      newTodo.value = ''
-    }
-    // 全选/全不选==>依赖变量而计算的结果做渲染(计算属性)
-    // const changeOkAll = computed(() => {
-    //   return todoList.value.every(item => item.isOk)
-    // })
-    const changeOkAll = computed({
-      get () {
-        return todoList.value.every(item => item.isOk)
-      },
-      set (v) {
-        // set设置改变全选/未全选
-        return todoList.value.forEach(io => {
-          io.isOk = v
-        })
-      }
-    })
-    // 剩余未完成的个数===>获取
-    const surp = computed(() => {
-      // 过滤isok 此处简写了过滤留下为false
-      return todoList.value.filter(item => !item.isOk).length
-    })
-    return { todoList, delTodo, addTodo, newTodo, changeOkAll, surp }
-  }
-}
-</script>
 <style>
 html,
 body {
