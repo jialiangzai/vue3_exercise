@@ -67,6 +67,9 @@ export default {
     }
     // 新增
     const addTodo = () => {
+      // 排除空回车
+      // if (newTodo.value === '') return
+      if (!newTodo.value.trim()) return
       todoList.value.unshift({
 
         id: Date.now(),
