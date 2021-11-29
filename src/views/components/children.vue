@@ -28,6 +28,8 @@ export default {
       default: () => ({})
     }
   },
+  // 声明vue3子传父的事件名
+  emits: ['change-obj'],
   setup (props, { emit }) {
     // props为一个对象，内部包含了父组件传递过来的所有prop数据
     // v2获取props就是this. ===》现在在同一作用域下不用this而是通过setup第一个参数props拿
@@ -46,7 +48,7 @@ export default {
     const change = () => {
       // Unexpected mutation of "num" prop.山寨版的虽然能改但是eslint会警告，只要不改地址的原则下可以练习但不推荐
       // props.num.value++
-      // 正规军 利用setup的第二个参数去子传父emit===>随机加一个数
+      // 正规军 利用setup的第二个参数去子传父emit===>随机加一个数----默认的话还需要声明一下控制台不会警告
       emit('change-obj', Math.floor(Math.random() * 100 + 1))
     }
     return { change }
